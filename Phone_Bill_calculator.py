@@ -3,6 +3,7 @@ from datetime import datetime
 CSV_FILEPATH =r"C:\Users\135982\01_Repositories\Code_Challenge\generated_sample.csv"
 STD_RATE=1
 BONUS_RATE=0.2
+RATE_OUTSIDE_INTERVAL=0.5 #From 1600 hrs to 800
 
 def Calculate(CSV_FILEPATH):
     Total_bill_list=[]
@@ -23,11 +24,14 @@ def get_billing_time(BillingData):
     Billtime=[]
     time_format="%m/%d/%Y %H:%M"
     for i in range(len(BillingData)):
-        print(type(BillingData[i][1]))
-        Start_time= datetime.strptime(BillingData[i][1],time_format )
+        Start_time= datetime.strptime(BillingData[i][1],time_format)
         End_time= datetime.strptime(BillingData[i][2], time_format)
         timetobill=End_time-Start_time
-        Billtime.append(timetobill)
+        # print(Start_time.hour)
+        if Start_time.hour >16 or Start_time.hour <8:
+            Billtime.append(timetobill/2)
+        else:
+            Billtime.append(timetobill)
     return(Billtime)
 
 # def 
